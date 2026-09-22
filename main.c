@@ -57,7 +57,6 @@ int main(void)
         }
         else
         {
-            /* Invalid inputs are handled by movePlayer. */
             printf("Ungueltige Bewegung.\n");
         }
     }
