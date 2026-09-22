@@ -2,9 +2,9 @@
 
 #include <raylib.h>
 
-#define TILE_SIZE 64
+#define TILE_SIZE 90
 #define BOARD_SIZE (SIZE * TILE_SIZE)
-#define SIDEBAR_WIDTH 330
+#define SIDEBAR_WIDTH 300
 #define WINDOW_WIDTH (BOARD_SIZE + SIDEBAR_WIDTH)
 #define WINDOW_HEIGHT (BOARD_SIZE + 90)
 
@@ -207,3 +207,4 @@ static void drawSprite(Rectangle source, Rectangle target)
 {
     DrawTexturePro(dungeonSprites, source, target, (Vector2){0, 0}, 0.0f, WHITE);
 }
+
