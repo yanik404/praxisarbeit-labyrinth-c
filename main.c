@@ -11,16 +11,52 @@ void initLabyrinth(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol,
 void printLabyrinth(char labyrinth[SIZE][SIZE]);
 int movePlayer(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol, char input);
 int checkWin(int playerRow, int playerCol, int treasureRow, int treasureCol);
+void startConsoleGame(void);
 
 int main(void)
+{
+    char selection;
+
+    srand((unsigned int)time(NULL));
+
+    do
+    {
+        printf("=== Labyrinth-Spiel ===\n");
+        printf("1 - Normales Konsolenspiel\n");
+        printf("2 - Grafische Ansicht\n");
+        printf("3 - Beenden\n");
+        printf("Auswahl: ");
+
+        if (scanf(" %c", &selection) != 1)
+        {
+            return 0;
+        }
+
+        if (selection == '1')
+        {
+            startConsoleGame();
+        }
+        else if (selection == '2')
+        {
+            printf("Die grafische Ansicht wird vorbereitet.\n\n");
+        }
+        else if (selection != '3')
+        {
+            printf("Ungueltige Auswahl.\n\n");
+        }
+    }
+    while (selection != '3');
+
+    return 0;
+}
+
+void startConsoleGame(void)
 {
     char labyrinth[SIZE][SIZE];
     int playerRow, playerCol;
     int treasureRow, treasureCol;
     char input;
     int running = 1;
-
-    srand((unsigned int)time(NULL));
 
     initLabyrinth(labyrinth, &playerRow, &playerCol, &treasureRow, &treasureCol);
 
