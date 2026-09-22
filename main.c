@@ -3,6 +3,7 @@
 #include <time.h>
 
 #define SIZE 10
+#define OBSTACLE_COUNT 10
 
 void printLabyrinth(char labyrinth[SIZE][SIZE]);
 
@@ -11,6 +12,8 @@ int main(void)
     char labyrinth[SIZE][SIZE] = {{' '}};
     int playerRow, playerCol;
     int treasureRow, treasureCol;
+    int row, col;
+    int placedObstacles = 0;
 
     srand((unsigned int)time(NULL));
 
@@ -26,6 +29,18 @@ int main(void)
 
     labyrinth[playerRow][playerCol] = 'P';
     labyrinth[treasureRow][treasureCol] = 'T';
+
+    while (placedObstacles < OBSTACLE_COUNT)
+    {
+        row = rand() % SIZE;
+        col = rand() % SIZE;
+
+        if (labyrinth[row][col] == ' ')
+        {
+            labyrinth[row][col] = 'O';
+            placedObstacles++;
+        }
+    }
 
     printf("=== Labyrinth-Spiel ===\n");
     printLabyrinth(labyrinth);
