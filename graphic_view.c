@@ -190,6 +190,8 @@ static void drawWinScreen(int moves)
 {
     DrawRectangle(90, 220, BOARD_SIZE - 180, 180, (Color){4, 10, 15, 235});
     DrawRectangleLines(90, 220, BOARD_SIZE - 180, 180, goldColor);
+    DrawCircle(BOARD_SIZE / 2, 246, 18, goldColor);
+    DrawText("+", BOARD_SIZE / 2 - 7, 233, 26, (Color){113, 61, 29, 255});
     DrawText("Du hast den Schatz gefunden!", 140, 255, 30, goldColor);
     DrawText(TextFormat("Zuege: %d", moves), 255, 305, 28, RAYWHITE);
     DrawText("R = Neues Spiel   Q = Beenden", 160, 350, 22, LIGHTGRAY);
