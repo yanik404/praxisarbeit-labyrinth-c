@@ -14,10 +14,8 @@ int movePlayer(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol, char 
 int checkWin(int playerRow, int playerCol, int treasureRow, int treasureCol);
 
 static const Color dungeonBackground = {12, 20, 28, 255};
-static const Color floorColor = {38, 49, 58, 255};
-static const Color wallColor = {100, 105, 109, 255};
-static const Color wallShadow = {42, 47, 52, 255};
 static const Color goldColor = {239, 177, 70, 255};
+static Texture2D dungeonSprites;
 
 static void drawLabyrinth(char labyrinth[SIZE][SIZE]);
 static void drawPlayer(int row, int col);
@@ -27,6 +25,7 @@ static void drawWinScreen(int moves);
 static void drawTorch(int x, int y);
 static void drawKey(int x, int y, const char *label);
 static int handleMovement(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol);
+static void drawSprite(Rectangle source, Rectangle target);
 
 void startGraphicGame(void)
 {
@@ -38,6 +37,13 @@ void startGraphicGame(void)
 
     InitWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Labyrinth-Spiel");
     SetTargetFPS(60);
+    {
+        Image spriteImage = LoadImage("assets/dungeon_sprites.png");
+        ImageColorReplace(&spriteImage, BLACK, BLANK);
+        dungeonSprites = LoadTextureFromImage(spriteImage);
+        SetTextureFilter(dungeonSprites, TEXTURE_FILTER_POINT);
+        UnloadImage(spriteImage);
+    }
     initLabyrinth(labyrinth, &playerRow, &playerCol, &treasureRow, &treasureCol);
 
     while (!WindowShouldClose())
@@ -80,6 +86,7 @@ void startGraphicGame(void)
         EndDrawing();
     }
 
+    UnloadTexture(dungeonSprites);
     CloseWindow();
 }
 
@@ -111,19 +118,11 @@ static void drawLabyrinth(char labyrinth[SIZE][SIZE])
             int x = col * TILE_SIZE;
             int y = row * TILE_SIZE;
 
-            DrawRectangle(x, y, TILE_SIZE, TILE_SIZE, floorColor);
-            DrawRectangleLines(x, y, TILE_SIZE, TILE_SIZE, (Color){61, 72, 80, 255});
-            DrawCircle(x + 16, y + 18, 2, (Color){75, 91, 83, 255});
-            DrawLine(x + 38, y + 14, x + 47, y + 22, (Color){27, 36, 42, 255});
-            DrawLine(x + 47, y + 22, x + 43, y + 32, (Color){27, 36, 42, 255});
+            drawSprite((Rectangle){520, 150, 380, 380}, (Rectangle){(float)x, (float)y, TILE_SIZE, TILE_SIZE});
 
             if (labyrinth[row][col] == 'O')
             {
-                DrawRectangle(x + 3, y + 3, TILE_SIZE - 6, TILE_SIZE - 6, wallShadow);
-                DrawRectangle(x + 5, y + 5, TILE_SIZE - 10, TILE_SIZE - 10, wallColor);
-                DrawLine(x + 8, y + 26, x + TILE_SIZE - 8, y + 26, wallShadow);
-                DrawLine(x + 23, y + 7, x + 23, y + 26, wallShadow);
-                DrawLine(x + 43, y + 27, x + 43, y + TILE_SIZE - 7, wallShadow);
+                drawSprite((Rectangle){70, 150, 380, 380}, (Rectangle){(float)x, (float)y, TILE_SIZE, TILE_SIZE});
             }
         }
     }
@@ -140,12 +139,7 @@ static void drawPlayer(int row, int col)
     int y = row * TILE_SIZE + TILE_SIZE / 2;
 
     DrawEllipse(x, y + 31, 17, 5, (Color){10, 15, 20, 130});
-    DrawCircle(x, y - 12, 12, (Color){241, 191, 143, 255});
-    DrawRectangle(x - 14, y, 28, 22, (Color){43, 112, 161, 255});
-    DrawRectangle(x - 16, y + 21, 12, 12, (Color){39, 50, 68, 255});
-    DrawRectangle(x + 4, y + 21, 12, 12, (Color){39, 50, 68, 255});
-    DrawCircle(x - 4, y - 13, 2, BLACK);
-    DrawCircle(x + 5, y - 13, 2, BLACK);
+    drawSprite((Rectangle){980, 190, 220, 340}, (Rectangle){(float)(x - 27), (float)(y - 40), 54, 76});
 }
 
 static void drawTreasure(int row, int col)
@@ -154,11 +148,7 @@ static void drawTreasure(int row, int col)
     int y = row * TILE_SIZE + 18;
 
     DrawCircle(x + 20, y + 25, 30, (Color){235, 161, 45, 35});
-    DrawRectangle(x, y + 16, 40, 25, (Color){113, 61, 29, 255});
-    DrawRectangle(x, y + 9, 40, 13, (Color){159, 94, 35, 255});
-    DrawRectangleLines(x, y + 9, 40, 32, goldColor);
-    DrawRectangle(x + 17, y + 20, 7, 10, goldColor);
-    DrawCircle(x + 20, y + 25, 2, YELLOW);
+    drawSprite((Rectangle){1320, 250, 330, 280}, (Rectangle){(float)x, (float)(y + 3), 42, 40});
 }
 
 static void drawSidebar(int moves)
@@ -202,11 +192,8 @@ static void drawWinScreen(int moves)
 
 static void drawTorch(int x, int y)
 {
-    DrawCircle(x, y, 26, (Color){235, 123, 33, 35});
-    DrawRectangle(x - 3, y, 6, 25, (Color){101, 58, 31, 255});
-    DrawTriangle((Vector2){(float)x, (float)(y - 25)}, (Vector2){(float)(x - 9), (float)(y - 2)},
-                 (Vector2){(float)(x + 9), (float)(y - 2)}, ORANGE);
-    DrawCircle(x, y - 10, 7, YELLOW);
+    DrawCircle(x, y, 32, (Color){235, 123, 33, 35});
+    drawSprite((Rectangle){1780, 130, 150, 410}, (Rectangle){(float)(x - 15), (float)(y - 35), 30, 78});
 }
 
 static void drawKey(int x, int y, const char *label)
@@ -214,4 +201,9 @@ static void drawKey(int x, int y, const char *label)
     DrawRectangleRounded((Rectangle){(float)x, (float)y, 38, 38}, 0.2f, 4, (Color){40, 49, 62, 255});
     DrawRectangleRoundedLines((Rectangle){(float)x, (float)y, 38, 38}, 0.2f, 4, LIGHTGRAY);
     DrawText(label, x + 12, y + 8, 21, RAYWHITE);
+}
+
+static void drawSprite(Rectangle source, Rectangle target)
+{
+    DrawTexturePro(dungeonSprites, source, target, (Vector2){0, 0}, 0.0f, WHITE);
 }
