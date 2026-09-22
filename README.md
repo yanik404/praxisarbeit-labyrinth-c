@@ -1,26 +1,27 @@
 # Praxisarbeit Labyrinth C
 
-Textbasiertes Konsolenspiel in C für die Praxisarbeit Programmiertechnik.
+Ein C-Konsolenspiel mit optionaler grafischer raylib-Ansicht für die Praxisarbeit Programmiertechnik.
 
 ## Spiel
+
 - `P` = Spieler
 - `T` = Schatz
 - `O` = Hindernis
 - Steuerung mit `W`, `A`, `S`, `D`
-- Beenden mit `Q`
+- `Q` beendet das Spiel
+
+Beim Start kann zwischen Konsolenmodus und grafischer Ansicht gewählt werden.
 
 ## Kompilieren
+
+Konsolenmodus:
+
 ```bash
 gcc main.c -o labyrinth -Wall -Wextra -Wpedantic
 ```
 
-## Starten
-Windows:
-```powershell
-.\\labyrinth.exe
-```
+Mit raylib unter Windows:
 
-Linux/macOS:
 ```bash
-./labyrinth
+gcc main.c graphic_view.c -o labyrinth.exe -IC:\\msys64\\ucrt64\\include -LC:\\msys64\\ucrt64\\lib -lraylib -lopengl32 -lgdi32 -lwinmm -Wall -Wextra -Wpedantic
 ```

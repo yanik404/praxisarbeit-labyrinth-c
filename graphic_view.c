@@ -184,6 +184,9 @@ static void drawSidebar(int moves)
     drawKey(x + 55, 480, "Q");
     DrawText("beenden", x + 110, 490, 24, LIGHTGRAY);
     DrawText("Finde die Truhe!", x + 55, 575, 22, GRAY);
+    DrawCircleLines(x + SIDEBAR_WIDTH / 2, 625, 42, goldColor);
+    DrawLine(x + SIDEBAR_WIDTH / 2, 575, x + SIDEBAR_WIDTH / 2, 675, goldColor);
+    DrawLine(x + SIDEBAR_WIDTH / 2 - 50, 625, x + SIDEBAR_WIDTH / 2 + 50, 625, goldColor);
 }
 
 static void drawWinScreen(int moves)
