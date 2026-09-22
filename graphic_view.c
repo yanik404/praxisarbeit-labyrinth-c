@@ -25,6 +25,7 @@ static void drawTreasure(int row, int col);
 static void drawSidebar(int moves);
 static void drawWinScreen(int moves);
 static void drawTorch(int x, int y);
+static void drawKey(int x, int y, const char *label);
 static int handleMovement(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol);
 
 void startGraphicGame(void)
@@ -175,9 +176,13 @@ static void drawSidebar(int moves)
     DrawText(TextFormat("%d", moves), x + 128, 240, 45, goldColor);
 
     DrawText("Steuerung:", x + 55, 350, 27, RAYWHITE);
-    DrawText("W  A  S  D", x + 58, 395, 29, LIGHTGRAY);
-    DrawText("bewegen", x + 86, 435, 23, LIGHTGRAY);
-    DrawText("Q  beenden", x + 58, 505, 24, LIGHTGRAY);
+    drawKey(x + 55, 392, "W");
+    drawKey(x + 105, 392, "A");
+    drawKey(x + 155, 392, "S");
+    drawKey(x + 205, 392, "D");
+    DrawText("bewegen", x + 86, 440, 23, LIGHTGRAY);
+    drawKey(x + 55, 480, "Q");
+    DrawText("beenden", x + 110, 490, 24, LIGHTGRAY);
     DrawText("Finde die Truhe!", x + 55, 575, 22, GRAY);
 }
 
@@ -197,4 +202,11 @@ static void drawTorch(int x, int y)
     DrawTriangle((Vector2){(float)x, (float)(y - 25)}, (Vector2){(float)(x - 9), (float)(y - 2)},
                  (Vector2){(float)(x + 9), (float)(y - 2)}, ORANGE);
     DrawCircle(x, y - 10, 7, YELLOW);
+}
+
+static void drawKey(int x, int y, const char *label)
+{
+    DrawRectangleRounded((Rectangle){(float)x, (float)y, 38, 38}, 0.2f, 4, (Color){40, 49, 62, 255});
+    DrawRectangleRoundedLines((Rectangle){(float)x, (float)y, 38, 38}, 0.2f, 4, LIGHTGRAY);
+    DrawText(label, x + 12, y + 8, 21, RAYWHITE);
 }
