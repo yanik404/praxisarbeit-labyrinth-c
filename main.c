@@ -90,6 +90,7 @@ int main(void)
         if (checkWin(playerRow, playerCol, treasureRow, treasureCol))
         {
             printf("Schatz gefunden!\n");
+            break;
         }
     }
 
