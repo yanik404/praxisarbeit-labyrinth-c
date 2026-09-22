@@ -2,15 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include "labyrinth.h"
 #include "graphic_view.h"
 
 #define OBSTACLE_COUNT 10
 
-void initLabyrinth(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol,
-                   int *treasureRow, int *treasureCol);
 void printLabyrinth(char labyrinth[SIZE][SIZE]);
-int movePlayer(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol, char input);
-int checkWin(int playerRow, int playerCol, int treasureRow, int treasureCol);
 void startConsoleGame(void);
 
 int main(void)
@@ -38,7 +35,11 @@ int main(void)
         }
         else if (selection == '2')
         {
+#ifndef CONSOLE_ONLY
             startGraphicGame();
+#else
+            printf("Bitte mit raylib kompilieren, um den Grafikmodus zu starten.\n");
+#endif
         }
         else if (selection != '3')
         {
@@ -181,6 +182,12 @@ void printLabyrinth(char labyrinth[SIZE][SIZE])
 
 int movePlayer(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol, char input)
 {
+    return movePlayerOnField(&labyrinth[0][0], SIZE, SIZE, playerRow, playerCol, input);
+}
+
+int movePlayerOnField(char *field, int rows, int cols,
+                      int *playerRow, int *playerCol, char input)
+{
     int newRow = *playerRow;
     int newCol = *playerCol;
 
@@ -202,20 +209,20 @@ int movePlayer(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol, char 
             return 0;
     }
 
-    if (newRow < 0 || newRow >= SIZE || newCol < 0 || newCol >= SIZE)
+    if (newRow < 0 || newRow >= rows || newCol < 0 || newCol >= cols)
     {
         return 0;
     }
 
-    if (labyrinth[newRow][newCol] == 'O')
+    if (field[newRow * cols + newCol] == 'O')
     {
         return 0;
     }
 
-    labyrinth[*playerRow][*playerCol] = ' ';
+    field[*playerRow * cols + *playerCol] = ' ';
     *playerRow = newRow;
     *playerCol = newCol;
-    labyrinth[*playerRow][*playerCol] = 'P';
+    field[*playerRow * cols + *playerCol] = 'P';
 
 
     return 1;
