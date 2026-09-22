@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 #define SIZE 10
 
@@ -7,6 +9,23 @@ void printLabyrinth(char labyrinth[SIZE][SIZE]);
 int main(void)
 {
     char labyrinth[SIZE][SIZE] = {{' '}};
+    int playerRow, playerCol;
+    int treasureRow, treasureCol;
+
+    srand((unsigned int)time(NULL));
+
+    playerRow = rand() % SIZE;
+    playerCol = rand() % SIZE;
+
+    do
+    {
+        treasureRow = rand() % SIZE;
+        treasureCol = rand() % SIZE;
+    }
+    while (treasureRow == playerRow && treasureCol == playerCol);
+
+    labyrinth[playerRow][playerCol] = 'P';
+    labyrinth[treasureRow][treasureCol] = 'T';
 
     printf("=== Labyrinth-Spiel ===\n");
     printLabyrinth(labyrinth);
