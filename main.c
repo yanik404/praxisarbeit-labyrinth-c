@@ -57,6 +57,7 @@ int main(void)
         }
         else
         {
+            /* Invalid inputs are handled by movePlayer. */
             printf("Ungueltige Bewegung.\n");
         }
     }
@@ -98,6 +99,7 @@ void initLabyrinth(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol,
         row = rand() % SIZE;
         col = rand() % SIZE;
 
+        /* Eine einfache L-foermige Verbindung bleibt frei, damit der Schatz erreichbar ist. */
         onSafePath =
             (col == *playerCol &&
              row >= ((*playerRow < *treasureRow) ? *playerRow : *treasureRow) &&
