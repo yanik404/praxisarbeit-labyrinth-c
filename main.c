@@ -14,6 +14,7 @@ int main(void)
     int treasureRow, treasureCol;
     int row, col;
     int placedObstacles = 0;
+    char input;
 
     srand((unsigned int)time(NULL));
 
@@ -43,7 +44,49 @@ int main(void)
     }
 
     printf("=== Labyrinth-Spiel ===\n");
+    printf("Steuerung: W = hoch, A = links, S = runter, D = rechts\n\n");
     printLabyrinth(labyrinth);
+
+    while (scanf(" %c", &input) == 1)
+    {
+        int newRow = playerRow;
+        int newCol = playerCol;
+
+        if (input == 'W')
+        {
+            newRow--;
+        }
+        else if (input == 'A')
+        {
+            newCol--;
+        }
+        else if (input == 'S')
+        {
+            newRow++;
+        }
+        else if (input == 'D')
+        {
+            newCol++;
+        }
+        else
+        {
+            printf("Ungueltige Eingabe.\n");
+            continue;
+        }
+
+        if (newRow < 0 || newRow >= SIZE || newCol < 0 || newCol >= SIZE ||
+            labyrinth[newRow][newCol] == 'O')
+        {
+            continue;
+        }
+
+        labyrinth[playerRow][playerCol] = ' ';
+        playerRow = newRow;
+        playerCol = newCol;
+        labyrinth[playerRow][playerCol] = 'P';
+        printLabyrinth(labyrinth);
+    }
+
     return 0;
 }
 
