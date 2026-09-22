@@ -70,7 +70,8 @@ int main(void)
         }
         else
         {
-            break;
+            printf("Ungueltige Eingabe.\n");
+            continue;
         }
 
         if (newRow < 0 || newRow >= SIZE || newCol < 0 || newCol >= SIZE ||
