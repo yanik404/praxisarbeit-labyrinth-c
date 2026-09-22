@@ -113,6 +113,8 @@ static void drawLabyrinth(char labyrinth[SIZE][SIZE])
             DrawRectangle(x, y, TILE_SIZE, TILE_SIZE, floorColor);
             DrawRectangleLines(x, y, TILE_SIZE, TILE_SIZE, (Color){61, 72, 80, 255});
             DrawCircle(x + 16, y + 18, 2, (Color){75, 91, 83, 255});
+            DrawLine(x + 38, y + 14, x + 47, y + 22, (Color){27, 36, 42, 255});
+            DrawLine(x + 47, y + 22, x + 43, y + 32, (Color){27, 36, 42, 255});
 
             if (labyrinth[row][col] == 'O')
             {
@@ -128,6 +130,7 @@ static void drawLabyrinth(char labyrinth[SIZE][SIZE])
     drawTorch(28, 100);
     drawTorch(BOARD_SIZE - 38, 245);
     drawTorch(BOARD_SIZE / 2, BOARD_SIZE - 100);
+    DrawRectangleLines(0, 0, BOARD_SIZE, BOARD_SIZE, (Color){168, 129, 79, 255});
 }
 
 static void drawPlayer(int row, int col)
