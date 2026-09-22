@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <ctype.h>
+#include "graphic_view.h"
 
-#define SIZE 10
 #define OBSTACLE_COUNT 10
 
 void initLabyrinth(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol,
@@ -38,7 +38,7 @@ int main(void)
         }
         else if (selection == '2')
         {
-            printf("Die grafische Ansicht wird vorbereitet.\n\n");
+            startGraphicGame();
         }
         else if (selection != '3')
         {
@@ -97,7 +97,7 @@ void startConsoleGame(void)
         }
     }
 
-    return 0;
+    return;
 }
 
 void initLabyrinth(char labyrinth[SIZE][SIZE], int *playerRow, int *playerCol,
