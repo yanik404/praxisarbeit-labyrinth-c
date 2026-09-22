@@ -6,6 +6,7 @@
 #define OBSTACLE_COUNT 10
 
 void printLabyrinth(char labyrinth[SIZE][SIZE]);
+int checkWin(int playerRow, int playerCol, int treasureRow, int treasureCol);
 
 int main(void)
 {
@@ -85,9 +86,20 @@ int main(void)
         playerCol = newCol;
         labyrinth[playerRow][playerCol] = 'P';
         printLabyrinth(labyrinth);
+
+        if (checkWin(playerRow, playerCol, treasureRow, treasureCol))
+        {
+            printf("Schatz gefunden!\n");
+            break;
+        }
     }
 
     return 0;
+}
+
+int checkWin(int playerRow, int playerCol, int treasureRow, int treasureCol)
+{
+    return playerRow == treasureRow && playerCol == treasureCol;
 }
 
 void printLabyrinth(char labyrinth[SIZE][SIZE])
