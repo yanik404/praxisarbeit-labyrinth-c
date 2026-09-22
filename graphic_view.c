@@ -138,6 +138,7 @@ static void drawPlayer(int row, int col)
     int x = col * TILE_SIZE + TILE_SIZE / 2;
     int y = row * TILE_SIZE + TILE_SIZE / 2;
 
+    DrawEllipse(x, y + 31, 17, 5, (Color){10, 15, 20, 130});
     DrawCircle(x, y - 12, 12, (Color){241, 191, 143, 255});
     DrawRectangle(x - 14, y, 28, 22, (Color){43, 112, 161, 255});
     DrawRectangle(x - 16, y + 21, 12, 12, (Color){39, 50, 68, 255});
@@ -151,10 +152,12 @@ static void drawTreasure(int row, int col)
     int x = col * TILE_SIZE + 12;
     int y = row * TILE_SIZE + 18;
 
+    DrawCircle(x + 20, y + 25, 30, (Color){235, 161, 45, 35});
     DrawRectangle(x, y + 16, 40, 25, (Color){113, 61, 29, 255});
     DrawRectangle(x, y + 9, 40, 13, (Color){159, 94, 35, 255});
     DrawRectangleLines(x, y + 9, 40, 32, goldColor);
     DrawRectangle(x + 17, y + 20, 7, 10, goldColor);
+    DrawCircle(x + 20, y + 25, 2, YELLOW);
 }
 
 static void drawSidebar(int moves)
