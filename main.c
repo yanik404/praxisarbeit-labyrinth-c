@@ -49,27 +49,39 @@ int main(void)
 
     while (scanf(" %c", &input) == 1)
     {
+        int newRow = playerRow;
+        int newCol = playerCol;
+
         if (input == 'W')
         {
-            playerRow--;
+            newRow--;
         }
         else if (input == 'A')
         {
-            playerCol--;
+            newCol--;
         }
         else if (input == 'S')
         {
-            playerRow++;
+            newRow++;
         }
         else if (input == 'D')
         {
-            playerCol++;
+            newCol++;
         }
         else
         {
             break;
         }
 
+        if (newRow < 0 || newRow >= SIZE || newCol < 0 || newCol >= SIZE ||
+            labyrinth[newRow][newCol] == 'O')
+        {
+            continue;
+        }
+
+        labyrinth[playerRow][playerCol] = ' ';
+        playerRow = newRow;
+        playerCol = newCol;
         labyrinth[playerRow][playerCol] = 'P';
         printLabyrinth(labyrinth);
     }
